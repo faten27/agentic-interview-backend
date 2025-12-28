@@ -1,4 +1,15 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import UploadFile, File
+
+@app.post("/upload-cv")
+async def receive_cv(cv: UploadFile = File(...)):
+    # For now just confirm we received it
+    content = await cv.read()  # read the file bytes
+    return {
+        "filename": cv.filename,
+        "size": len(content),
+        "message": "CV received! We will analyze it soon."
+    }
+    from fastapi import APIRouter, HTTPException
 from typing import Optional
 import uuid
 
